@@ -14,13 +14,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="container">
       <div class="row">
         <div class="main_title_hmbrg mt-3">
-            <h6 class="page-title-heading mr-0 mr-r-5"><a href="<?= base_url() ?>">Home</a> &gt; <a href="<?= base_url() ?>test/list">Book-Test</a>&gt; Cart</h6>
+            <h6 class="page-title-heading mr-0 mr-r-5"><a href="<?= base_url() ?>">Home</a> &gt; <a href="<?= base_url() ?>test/list">Book-Test</a>&gt; Order-Details</h6>
           </div>
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             
             <br />
-        <h3 align="center">Cart</h3>
+        <h3 align="center" style="color: #239b27">ORDER SUCCESSFULLY PLACED</h3>
         <br />
         <div class="panel panel-default">
             <div class="panel-body">
@@ -43,9 +43,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $total_count += $value->count; ?>
                 <tr>
                     <td><?= $value->itemName ?></td>
-                    <td><input style="width: 25px;text-align: center;" type="text" name="count_<?=$value->item_id ?>" value= "<?= $value->count ?>"></td>
+                    <td><?= $value->count ?></td>
                     <td><?= $value->count*$value->minPrice ?></td>
-                    <td><a href="<?=base_url() ?>cart/remove/<?= $value->id ?>" style="background-color: #1976d2;color: white" class="btn">Remove</a></td>
+                    <td></td>
                     
                 </tr>
                 <?php } ?>
@@ -53,7 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <td>Total</td>
                     <td><?= $total_count ?></td>
                     <td><?= $total_amount ?></td>
-                    <td><a href="<?= base_url() ?>cart/orderDetails"  style="background-color: #1976d2;color: white" class="btn">Pay Now</a></td>
+                    <td style="color: #239b27" >PAID</td>
                     
                 </tr>
 

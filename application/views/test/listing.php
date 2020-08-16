@@ -68,11 +68,65 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <div class="row">
                 
                 <!-- /aside -->
-                <div class="col-lg-9">
-                  <div class="isotope-wrapper doctor_list_filtered">
+                 <?php foreach ($package as $key => $value) { ?>
+         <div class="col-md-6 isotope-item popular">
+            <a href="#">
+               <div class="box_grid doct-add">
+                  <div class="wrapper">
+                     <div class="row no-gutters">
+                        <div class="col-lg-3">
+                           <figure>
+                              <img src="http://tabibi.ae/admin/public/pharmacy/deals_images/2020_02_18_5e4b969740280.jpg" class="img-fluid" alt="" width="800" height="533">
+                           </figure>
+                          
+                        </div>
+                        <div class="col-lg-9">
+                           <div class="doct-list-detl">
+                              <div class="doct-list-detl-inner">
+                                 <h3 class="pull-left"> <?= $value->itemName ?></h3>
+                                 <p class="pull-right">0 % off</p>
+                              </div>
+                              <div class="doct-list-detl-nm mt-2">
+                                 <ul>
+                                    <li><?= $value->labName ?></li>
+                                    <li></li>
+                                 </ul>
+                              </div>
+                              <div class="doct-list-detl-nm mt-2">
+                                 <ul>
+                                    <li>Fasting Required</li>
+                                    <li><?php if($value->labName == 0){echo "NO";}else{echo "YES";} ?></li>
+                                 </ul>
+                              </div>
+                              <div class="doct-list-detl-nm">
+                                 <ul>
+                                    <li>Test Cost</li>
+                                    <li><?= $value->minPrice ?></li>
+                                 </ul>
+                              </div>
+                              <div class="doct-list-detl-nm">
+                                 <ul>
+                                    <li>Total Number of Test</li>
+                                    <li><?= $value->testCount ?></li>
+                                 </ul>
+                              </div>
+                             
+                              <div class="doct-list-detl-btn mt-3">
+                                 <!-- <button class="btn_1 rounded prime-bg">Pay Now: AED  720</button> -->
+                                 <form action="<?php echo base_url(); ?>cart/add" method="POST">
+                                    <input type="hidden" name="item_id" value="<?= $value->id ?>">
+                                    <button class="btn_1 rounded prime-bg" type="submit">Add the Test</button>
+                                 </form>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
                   </div>
-                  <!-- /isotope-wrapper -->
-                </div>
+               </div>
+            </a>
+         </div>
+
+       <?php } ?>
               </div>
             </div>
             <div class="tab-pane active" id="clinic-tab-bordered-1">

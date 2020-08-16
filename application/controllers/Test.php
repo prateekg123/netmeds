@@ -31,6 +31,12 @@ class Test extends CI_Controller {
     $this->db->where('type','Test');
     $query = $this->db->get();
     $test=$query->result();
+
+    $this->db->select('*');
+    $this->db->from('items');
+    $this->db->where('type','Package');
+    $query = $this->db->get();
+    $package=$query->result();
     
 
    
@@ -52,6 +58,7 @@ class Test extends CI_Controller {
     $search_array = rtrim($search_array, ".");
     $data['search_array'] = $search_array; 
     $data['test'] = $test; 
+    $data['package'] = $package; 
 
     $this->load->view('test/listing',$data);
  }
@@ -77,6 +84,14 @@ class Test extends CI_Controller {
     $test=$query->result();
     
 
+
+    $this->db->select('*');
+    $this->db->from('items');
+    $this->db->where('type','Package');
+    if($search != "")
+    $this->db->where('itemName',$search);
+    $query = $this->db->get();
+    $package=$query->result();
    
     $search_array = '';
     foreach ($result as $key => $value) {
@@ -96,7 +111,8 @@ class Test extends CI_Controller {
     $search_array = rtrim($search_array, ".");
     $data['search_array'] = $search_array; 
     $data['test'] = $test; 
-
+    $data['package'] = $package; 
+    
     $this->load->view('test/listing',$data);
  }
 

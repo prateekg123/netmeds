@@ -24,6 +24,13 @@ class Cart extends CI_Controller {
     $query = $this->db->get();
     $cart_data=$query->result();
     $data['cart_data'] = $cart_data;
+
+    $this->db->select_sum('count'); 
+    $this->db->where('user_id',$user_id);
+    $query = $this->db->get('baskets');
+    $total_count=$query->row();
+    $this->session->set_userdata('basket_count', $total_count->count);
+
    $this->load->view('cart',$data);
  }
 
@@ -91,39 +98,75 @@ class Cart extends CI_Controller {
 
      
     }
+
     $this->db->select_sum('count'); 
     $this->db->where('user_id',$user_id);
     $query = $this->db->get('baskets');
     $total_count=$query->row();
-
     $this->session->set_userdata('basket_count', $total_count->count);
 
-    $this->db->select('distinct(itemName)');
-    $this->db->from('items');
-    $query = $this->db->get();
-    $result=$query->result();
 
-    $this->db->select('*');
-    $this->db->from('items');
-    $this->db->where('type','Test');
-    $query = $this->db->get();
-    $test=$query->result();
+    redirect(base_url()."test/list");
+    // $this->db->select('distinct(itemName)');
+    // $this->db->from('items');
+    // $query = $this->db->get();
+    // $result=$query->result();
+
+    // $this->db->select('*');
+    // $this->db->from('items');
+    // $this->db->where('type','Test');
+    // $query = $this->db->get();
+    // $test=$query->result();
     
 
    
-    $search_array = '';
-    foreach ($result as $key => $value) {
-      $search_array .= '"';
-      $search_array .= $value->itemName;
-      $search_array .= '",';
+    // $search_array = '';
+    // foreach ($result as $key => $value) {
+    //   $search_array .= '"';
+    //   $search_array .= $value->itemName;
+    //   $search_array .= '",';
 
-    }
+    // }
 
-    $search_array = rtrim($search_array, ".");
-    $data['search_array'] = $search_array; 
-    $data['test'] = $test; 
+    // $search_array = rtrim($search_array, ".");
+    // $data['search_array'] = $search_array; 
+    // $data['test'] = $test; 
 
-    $this->load->view('test/listing',$data);
+    // $this->load->view('test/listing',$data);
+ }
+ function remove($item_id){
+    $user_id = $this->session->userdata('id');
+    $this->db->where('item_id', $item_id);
+    $this->db->where('user_id', $user_id);
+    $this->db->delete('baskets');
+    redirect(base_url().'cart');
+    die();
+
+ }
+
+ function orderDetails()
+ {
+  $user_id = $this->session->userdata('id');
+    $this->db->select('*');
+    $this->db->from('baskets');
+    $this->db->join ( 'items', 'items.id = baskets.item_id' );
+    $this->db->where('user_id',$user_id);
+    $query = $this->db->get();
+    $cart_data=$query->result();
+    $data['cart_data'] = $cart_data;
+
+    
+    $this->db->where('user_id', $user_id);
+    $this->db->delete('baskets');
+
+    $this->db->select_sum('count'); 
+    $this->db->where('user_id',$user_id);
+    $query = $this->db->get('baskets');
+    $total_count=$query->row();
+    $this->session->set_userdata('basket_count', $total_count->count);
+
+
+   $this->load->view('orderDetail',$data);
  }
 
  
